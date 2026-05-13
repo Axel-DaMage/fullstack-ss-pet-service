@@ -38,7 +38,7 @@ public class PetService {
     @Transactional
     public Pet createPetWithContact(Pet pet, Contact contact) {
         Contact savedContact = contactRepository.save(contact);
-        pet.setContact(savedContact);
+        pet.setContacto(savedContact);
         return petRepository.save(pet);
     }
 
@@ -47,13 +47,13 @@ public class PetService {
         Pet pet = petRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pet not found with id: " + id));
 
-        pet.setName(petDetails.getName());
-        pet.setRace(petDetails.getRace());
+        pet.setNombre(petDetails.getNombre());
+        pet.setRaza(petDetails.getRaza());
         pet.setColor(petDetails.getColor());
-        pet.setSize(petDetails.getSize());
-        pet.setStatus(petDetails.getStatus());
-        pet.setDescription(petDetails.getDescription());
-        pet.setPhotoUrl(petDetails.getPhotoUrl());
+        pet.setTamano(petDetails.getTamano());
+        pet.setEstado(petDetails.getEstado());
+        pet.setDescripcion(petDetails.getDescripcion());
+        pet.setFotoUrl(petDetails.getFotoUrl());
 
         return petRepository.save(pet);
     }
@@ -66,15 +66,15 @@ public class PetService {
     }
 
     public List<Pet> getPetsByRace(String race) {
-        return petRepository.findByRace(race);
+        return petRepository.findByRaza(race);
     }
 
     public List<Pet> getPetsByStatus(String status) {
-        return petRepository.findByStatus(status);
+        return petRepository.findByEstado(status);
     }
 
     public long countPetsByStatus(String status) {
-        return petRepository.countByStatus(status);
+        return petRepository.countByEstado(status);
     }
 
     public List<Pet> getPetsByColor(String color) {
