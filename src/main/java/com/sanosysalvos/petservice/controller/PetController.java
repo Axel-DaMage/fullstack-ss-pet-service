@@ -40,19 +40,19 @@ public class PetController {
     @PostMapping("/with-contact")
     public ResponseEntity<Pet> createPetWithContact(@RequestBody Map<String, Object> request) {
         Pet pet = new Pet();
-        pet.setName((String) request.get("name"));
-        pet.setRace((String) request.get("race"));
+        pet.setNombre((String) request.get("nombre"));
+        pet.setRaza((String) request.get("raza"));
         pet.setColor((String) request.get("color"));
-        pet.setSize((String) request.get("size"));
-        pet.setStatus((String) request.get("status"));
-        pet.setDescription((String) request.get("description"));
-        pet.setPhotoUrl((String) request.get("photoUrl"));
+        pet.setTamano((String) request.get("tamano"));
+        pet.setEstado((String) request.get("estado"));
+        pet.setDescripcion((String) request.get("descripcion"));
+        pet.setFotoUrl((String) request.get("fotoUrl"));
 
         Contact contact = new Contact();
-        contact.setName((String) request.get("contactName"));
-        contact.setPhone((String) request.get("contactPhone"));
-        contact.setEmail((String) request.get("contactEmail"));
-        contact.setAddress((String) request.get("contactAddress"));
+        contact.setNombre((String) request.get("contactoNombre"));
+        contact.setTelefono((String) request.get("contactoTelefono"));
+        contact.setCorreo((String) request.get("contactoCorreo"));
+        contact.setDireccion((String) request.get("contactoDireccion"));
 
         Pet createdPet = petService.createPetWithContact(pet, contact);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPet);

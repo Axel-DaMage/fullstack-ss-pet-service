@@ -8,13 +8,13 @@ import java.util.List;
 @Repository
 public interface PetRepository extends JpaRepository<Pet, Long> {
 
-    List<Pet> findByStatus(String status);
+    List<Pet> findByEstado(String estado);
 
-    List<Pet> findByRace(String race);
+    List<Pet> findByRaza(String raza);
 
     List<Pet> findByColor(String color);
 
-    List<Pet> findBySize(String size);
+    List<Pet> findByTamano(String tamano);
 
-    long countByStatus(String status);
+    long countByEstado(String estado);
 }
