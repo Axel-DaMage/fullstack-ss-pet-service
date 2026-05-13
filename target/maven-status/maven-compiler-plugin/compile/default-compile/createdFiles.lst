@@ -1,0 +1,5 @@
+com\sanosysalvos\petservice\entity\PetReport.class
+com\sanosysalvos\petservice\controller\PetReportController.class
+com\sanosysalvos\petservice\factory\PetReportFactory.class
+com\sanosysalvos\petservice\PetServiceApplication.class
+com\sanosysalvos\petservice\repository\PetReportRepository.class

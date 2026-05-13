@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+    <changeSet id="create-pets-table" author="sanosysalvos">
+        <createTable tableName="pets">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)" nullable="false"/>
+            <column name="race" type="VARCHAR(50)"/>
+            <column name="color" type="VARCHAR(50)"/>
+            <column name="size" type="VARCHAR(20)"/>
+            <column name="status" type="VARCHAR(20)" nullable="false"/>
+            <column name="description" type="VARCHAR(500)"/>
+            <column name="photo_url" type="VARCHAR(255)"/>
+            <column name="contact_id" type="BIGINT">
+                <constraints foreignKeyName="fk_pet_contact" references="contacts(id)" deleteCascade="true"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" nullable="false" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP" nullable="false" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addIndex tableName="pets" indexName="idx_pet_status">
+            <column name="status"/>
+        </addIndex>
+        <addIndex tableName="pets" indexName="idx_pet_race">
+            <column name="race"/>
+        </addIndex>
+    </changeSet>
+</databaseChangeLog>

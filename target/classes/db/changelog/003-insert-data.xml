@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+    <changeSet id="insert-contacts" author="sanosysalvos">
+        <insert tableName="contacts">
+            <column name="name">Juan Pérez</column>
+            <column name="phone">+56912345678</column>
+            <column name="email">juan.perez@email.com</column>
+            <column name="address">Av. Libertador 123, Santiago</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">María González</column>
+            <column name="phone">+56987654321</column>
+            <column name="email">maria.gonzalez@email.com</column>
+            <column name="address">Calle Mayor 456, Providencia</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">Carlos López</column>
+            <column name="phone">+56911223344</column>
+            <column name="email">carlos.lopez@email.com</column>
+            <column name="address">Pasaje Norte 789, Las Condes</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">Ana Rodríguez</column>
+            <column name="phone">+56955667788</column>
+            <column name="email">ana.rodriguez@email.com</column>
+            <column name="address">Av. Sur 321, Maipú</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">Pedro Sánchez</column>
+            <column name="phone">+56999887766</column>
+            <column name="email">pedro.sanchez@email.com</column>
+            <column name="address">Calle Este 654, Ñuñoa</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">Laura Muñoz</column>
+            <column name="phone">+56944556677</column>
+            <column name="email">laura.munoz@email.com</column>
+            <column name="address">Av. Poniente 987, Vitacura</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">Roberto Fuentes</column>
+            <column name="phone">+56933445566</column>
+            <column name="email">roberto.fuentes@email.com</column>
+            <column name="address">Calle Norte 147, San Miguel</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">Carmen Vargas</column>
+            <column name="phone">+56922334455</column>
+            <column name="email">carmen.vargas@email.com</column>
+            <column name="address">Av. Oriente 258, La Florida</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">Fernando Reyes</column>
+            <column name="phone">+56966778899</column>
+            <column name="email">fernando.reyes@email.com</column>
+            <column name="address">Pasaje Sur 369, Peñalolén</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">Isabel Torres</column>
+            <column name="phone">+56977889900</column>
+            <column name="email">isabel.torres@email.com</column>
+            <column name="address">Calle Centro 741, San Bernardo</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">Diego Moreno</column>
+            <column name="phone">+56988990011</column>
+            <column name="email">diego.moreno@email.com</column>
+            <column name="address">Av. Norte 852, Pudahuel</column>
+        </insert>
+        <insert tableName="contacts">
+            <column name="name">Patricia Contreras</column>
+            <column name="phone">+56999001122</column>
+            <column name="email">patricia.contreras@email.com</column>
+            <column name="address">Calle Sur 963, La Pintana</column>
+        </insert>
+    </changeSet>
+    <changeSet id="insert-pets" author="sanosysalvos">
+        <insert tableName="pets">
+            <column name="name">Max</column>
+            <column name="race">Golden Retriever</column>
+            <column name="color">Dorado</column>
+            <column name="size">Grande</column>
+            <column name="status">LOST</column>
+            <column name="description">Perro adulto con collar rojo, muy amigable</column>
+            <column name="photo_url">https://example.com/photos/max1.jpg</column>
+            <column name="contact_id">1</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Luna</column>
+            <column name="race">Siames</column>
+            <column name="color">Crema</column>
+            <column name="size">Mediano</column>
+            <column name="status">LOST</column>
+            <column name="description">Gata con ojos azules, muy asustadiza</column>
+            <column name="photo_url">https://example.com/photos/luna1.jpg</column>
+            <column name="contact_id">2</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Rocky</column>
+            <column name="race">Pitbull</column>
+            <column name="color">Negro</column>
+            <column name="size">Grande</column>
+            <column name="status">FOUND</column>
+            <column name="description">Perro macho encontrado en parque, sin collar</column>
+            <column name="photo_url">https://example.com/photos/rocky1.jpg</column>
+            <column name="contact_id">3</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Mishi</column>
+            <column name="race">Persa</column>
+            <column name="color">Naranja</column>
+            <column name="size">Pequeño</column>
+            <column name="status">FOUND</column>
+            <column name="description">Gato peludo encontrado cerca del supermercado</column>
+            <column name="photo_url">https://example.com/photos/mishi1.jpg</column>
+            <column name="contact_id">4</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Thor</column>
+            <column name="race">Labrador</column>
+            <column name="color">Negro</column>
+            <column name="size">Grande</column>
+            <column name="status">LOST</column>
+            <column name="description">Perro con marca en la pata izquierda, muy activo</column>
+            <column name="photo_url">https://example.com/photos/thor1.jpg</column>
+            <column name="contact_id">5</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Pelusa</column>
+            <column name="race">Criollo</column>
+            <column name="color">Gris</column>
+            <column name="size">Mediano</column>
+            <column name="status">FOUND</column>
+            <column name="description">Gata encontrada en estacionamiento, muy mansa</column>
+            <column name="photo_url">https://example.com/photos/pelusa1.jpg</column>
+            <column name="contact_id">6</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Duke</column>
+            <column name="race">Pastor Alemán</column>
+            <column name="color">Marrón</column>
+            <column name="size">Grande</column>
+            <column name="status">LOST</column>
+            <column name="description">Perro con oreja derecha doblada, entrenado</column>
+            <column name="photo_url">https://example.com/photos/duke1.jpg</column>
+            <column name="contact_id">7</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Kira</column>
+            <column name="race">Beagle</column>
+            <column name="color">Blanco y marrón</column>
+            <column name="size">Mediano</column>
+            <column name="status">FOUND</column>
+            <column name="description">Perra encontrada cerca de la plaza, tieneChip</column>
+            <column name="photo_url">https://example.com/photos/kira1.jpg</column>
+            <column name="contact_id">8</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Simba</column>
+            <column name="race">Maine Coon</column>
+            <column name="color">Naranja rayado</column>
+            <column name="size">Grande</column>
+            <column name="status">LOST</column>
+            <column name="description">Gato muy grande, ojos verdes, asustadizo</column>
+            <column name="photo_url">https://example.com/photos/simba1.jpg</column>
+            <column name="contact_id">9</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Zeus</column>
+            <column name="race">Bulldog Francés</column>
+            <column name="color">Atigrado</column>
+            <column name="size">Pequeño</column>
+            <column name="status">FOUND</column>
+            <column name="description">Perro pequeño encontrado en tienda de mascotas</column>
+            <column name="photo_url">https://example.com/photos/zeus1.jpg</column>
+            <column name="contact_id">10</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Cloe</column>
+            <column name="race">Yorkshire Terrier</column>
+            <column name="color">Marrón y negro</column>
+            <column name="size">Pequeño</column>
+            <column name="status">LOST</column>
+            <column name="description">Perra pequeña con moño rosa, muy juguetona</column>
+            <column name="photo_url">https://example.com/photos/cloe1.jpg</column>
+            <column name="contact_id">11</column>
+        </insert>
+        <insert tableName="pets">
+            <column name="name">Bingo</column>
+            <column name="race">Coker Spaniel</column>
+            <column name="color">Café</column>
+            <column name="size">Mediano</column>
+            <column name="status">FOUND</column>
+            <column name="description">Perro encontrado en playa, muy sociable</column>
+            <column name="photo_url">https://example.com/photos/bingo1.jpg</column>
+            <column name="contact_id">12</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
