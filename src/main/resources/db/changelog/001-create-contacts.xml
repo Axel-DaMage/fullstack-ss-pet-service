@@ -8,12 +8,12 @@
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="VARCHAR(100)" nullable="false"/>
-            <column name="phone" type="VARCHAR(20)"/>
-            <column name="email" type="VARCHAR(100)"/>
-            <column name="address" type="VARCHAR(255)"/>
-            <column name="created_at" type="TIMESTAMP" nullable="false" defaultValueComputed="CURRENT_TIMESTAMP"/>
-            <column name="updated_at" type="TIMESTAMP" nullable="false" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+            <column name="nombre" type="VARCHAR(100)" nullable="false"/>
+            <column name="telefono" type="VARCHAR(20)"/>
+            <column name="correo" type="VARCHAR(100)"/>
+            <column name="direccion" type="VARCHAR(255)"/>
+            <column name="creado_en" type="TIMESTAMP" nullable="false" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="actualizado_en" type="TIMESTAMP" nullable="false" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
