@@ -77,6 +77,10 @@ public class PetService {
         return petRepository.countByStatus(status);
     }
 
+    public List<Pet> getPetsByColor(String color) {
+        return petRepository.findByColor(color);
+    }
+
     public Pet createPetFromFactory(String name, String race, String color, String size, String status) {
         return petFactory.createPet(name, race, color, size, status);
     }

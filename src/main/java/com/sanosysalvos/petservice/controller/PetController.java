@@ -31,11 +31,6 @@ public class PetController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/health")
-    public ResponseEntity<String> health() {
-        return ResponseEntity.ok("Pet Service is running");
-    }
-
     @PostMapping
     public ResponseEntity<Pet> createPet(@RequestBody Pet pet) {
         Pet createdPet = petService.createPet(pet);
@@ -91,6 +86,11 @@ public class PetController {
     @GetMapping("/search/status/{status}")
     public ResponseEntity<List<Pet>> getPetsByStatus(@PathVariable String status) {
         return ResponseEntity.ok(petService.getPetsByStatus(status));
+    }
+
+    @GetMapping("/search/color/{color}")
+    public ResponseEntity<List<Pet>> getPetsByColor(@PathVariable String color) {
+        return ResponseEntity.ok(petService.getPetsByColor(color));
     }
 
     @GetMapping("/totals/status")
