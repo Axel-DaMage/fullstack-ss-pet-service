@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  pet-service:
+    build:
+      context: ./pet-service
+      dockerfile: Dockerfile
+    image: pet-service:latest
+    container_name: pet-service
+    ports:
+      - "3001:3001"
+    environment:
+      - SPRING_DATASOURCE_URL=${DB_URL}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_PROFILES_ACTIVE=prod
+    restart: unless-stopped
+    networks:
+      - backend-network
+
+  geo-service:
+    build:
+      context: ./geo-service
+      dockerfile: Dockerfile
+    image: geo-service:latest
+    container_name: geo-service
+    ports:
+      - "3002:3002"
+    environment:
+      - SPRING_DATASOURCE_URL=${DB_URL}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_PROFILES_ACTIVE=prod
+    restart: unless-stopped
+    networks:
+      - backend-network
+
+  match-service:
+    build:
+      context: ./match-service
+      dockerfile: Dockerfile
+    image: match-service:latest
+    container_name: match-service
+    ports:
+      - "3003:3003"
+    environment:
+      - SPRING_DATASOURCE_URL=${DB_URL}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - PET_SERVICE_URL=http://pet-service:3001
+      - GEO_SERVICE_URL=http://geo-service:3002
+      - SPRING_PROFILES_ACTIVE=prod
+    restart: unless-stopped
+    networks:
+      - backend-network
+    depends_on:
+      - pet-service
+      - geo-service
+
+networks:
+  backend-network:
+    driver: bridge
