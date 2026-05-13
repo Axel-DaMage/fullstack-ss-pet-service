@@ -31,6 +31,11 @@ public class PetController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("Pet Service is running");
+    }
+
     @PostMapping
     public ResponseEntity<Pet> createPet(@RequestBody Pet pet) {
         Pet createdPet = petService.createPet(pet);
