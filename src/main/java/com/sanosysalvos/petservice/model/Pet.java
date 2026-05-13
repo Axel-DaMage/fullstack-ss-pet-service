@@ -33,7 +33,7 @@ public class Pet {
     private String fotoUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contacto_id")
+    @JoinColumn(name = "id_contacto")
     private Contact contacto;
 
     @Column(name = "creado_en", nullable = false, updatable = false)

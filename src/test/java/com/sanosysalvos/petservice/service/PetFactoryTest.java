@@ -10,14 +10,14 @@ class PetFactoryTest {
 
     @Test
     void testCreatePet() {
-        Pet pet = petFactory.createPet("Max", "Golden Retriever", "Dorado", "Grande", "LOST");
+        Pet pet = petFactory.createPet("Max", "Golden Retriever", "Dorado", "Grande", "PERDIDO");
 
         assertNotNull(pet);
         assertEquals("Max", pet.getName());
         assertEquals("Golden Retriever", pet.getRace());
         assertEquals("Dorado", pet.getColor());
         assertEquals("Grande", pet.getSize());
-        assertEquals("LOST", pet.getStatus());
+        assertEquals("PERDIDO", pet.getStatus());
     }
 
     @Test
@@ -26,7 +26,7 @@ class PetFactoryTest {
 
         assertNotNull(pet);
         assertEquals("Luna", pet.getName());
-        assertEquals("LOST", pet.getStatus());
+        assertEquals("PERDIDO", pet.getStatus());
         assertEquals("Gata perdida", pet.getDescription());
     }
 }

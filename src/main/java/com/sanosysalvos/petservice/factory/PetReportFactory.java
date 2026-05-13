@@ -26,7 +26,7 @@ public class PetReportFactory {
         String contact = data.getOrDefault("contactInfo", "No info").toString();
         
         // Business rule simulation
-        if ("FOUND".equalsIgnoreCase(type) && (contact.equals("No info") || contact.isEmpty())) {
+        if ("ENCONTRADO".equalsIgnoreCase(type) && (contact.equals("No info") || contact.isEmpty())) {
             contact = "Anonimo";
         }
         report.setContactInfo(contact);

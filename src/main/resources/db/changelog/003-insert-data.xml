@@ -3,7 +3,7 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
-    <changeSet id="insert-contacts" author="sanosysalvos">
+    <changeSet id="insertar-contactos" author="sanosysalvos">
         <insert tableName="contacts">
             <column name="nombre">Juan Pérez</column>
             <column name="telefono">+56912345678</column>
@@ -77,126 +77,126 @@
             <column name="direccion">Calle Sur 963, La Pintana</column>
         </insert>
     </changeSet>
-    <changeSet id="insert-pets" author="sanosysalvos">
+    <changeSet id="insertar-mascotas" author="sanosysalvos">
         <insert tableName="pets">
             <column name="nombre">Max</column>
             <column name="raza">Golden Retriever</column>
             <column name="color">Dorado</column>
             <column name="tamano">Grande</column>
-            <column name="estado">LOST</column>
+            <column name="estado">PERDIDO</column>
             <column name="descripcion">Perro adulto con collar rojo, muy amigable</column>
             <column name="foto_url">https://example.com/photos/max1.jpg</column>
-            <column name="contacto_id">1</column>
+            <column name="id_contacto">1</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Luna</column>
             <column name="raza">Siames</column>
             <column name="color">Crema</column>
             <column name="tamano">Mediano</column>
-            <column name="estado">LOST</column>
+            <column name="estado">PERDIDO</column>
             <column name="descripcion">Gata con ojos azules, muy asustadiza</column>
             <column name="foto_url">https://example.com/photos/luna1.jpg</column>
-            <column name="contacto_id">2</column>
+            <column name="id_contacto">2</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Rocky</column>
             <column name="raza">Pitbull</column>
             <column name="color">Negro</column>
             <column name="tamano">Grande</column>
-            <column name="estado">FOUND</column>
+            <column name="estado">ENCONTRADO</column>
             <column name="descripcion">Perro macho encontrado en parque, sin collar</column>
             <column name="foto_url">https://example.com/photos/rocky1.jpg</column>
-            <column name="contacto_id">3</column>
+            <column name="id_contacto">3</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Mishi</column>
             <column name="raza">Persa</column>
             <column name="color">Naranja</column>
             <column name="tamano">Pequeño</column>
-            <column name="estado">FOUND</column>
+            <column name="estado">ENCONTRADO</column>
             <column name="descripcion">Gato peludo encontrado cerca del supermercado</column>
             <column name="foto_url">https://example.com/photos/mishi1.jpg</column>
-            <column name="contacto_id">4</column>
+            <column name="id_contacto">4</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Thor</column>
             <column name="raza">Labrador</column>
             <column name="color">Negro</column>
             <column name="tamano">Grande</column>
-            <column name="estado">LOST</column>
+            <column name="estado">PERDIDO</column>
             <column name="descripcion">Perro con marca en la pata izquierda, muy activo</column>
             <column name="foto_url">https://example.com/photos/thor1.jpg</column>
-            <column name="contacto_id">5</column>
+            <column name="id_contacto">5</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Pelusa</column>
             <column name="raza">Criollo</column>
             <column name="color">Gris</column>
             <column name="tamano">Mediano</column>
-            <column name="estado">FOUND</column>
+            <column name="estado">ENCONTRADO</column>
             <column name="descripcion">Gata encontrada en estacionamiento, muy mansa</column>
             <column name="foto_url">https://example.com/photos/pelusa1.jpg</column>
-            <column name="contacto_id">6</column>
+            <column name="id_contacto">6</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Duke</column>
             <column name="raza">Pastor Alemán</column>
             <column name="color">Marrón</column>
             <column name="tamano">Grande</column>
-            <column name="estado">LOST</column>
+            <column name="estado">PERDIDO</column>
             <column name="descripcion">Perro con oreja derecha doblada, entrenado</column>
             <column name="foto_url">https://example.com/photos/duke1.jpg</column>
-            <column name="contacto_id">7</column>
+            <column name="id_contacto">7</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Kira</column>
             <column name="raza">Beagle</column>
             <column name="color">Blanco y marrón</column>
             <column name="tamano">Mediano</column>
-            <column name="estado">FOUND</column>
+            <column name="estado">ENCONTRADO</column>
             <column name="descripcion">Perra encontrada cerca de la plaza, tieneChip</column>
             <column name="foto_url">https://example.com/photos/kira1.jpg</column>
-            <column name="contacto_id">8</column>
+            <column name="id_contacto">8</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Simba</column>
             <column name="raza">Maine Coon</column>
             <column name="color">Naranja rayado</column>
             <column name="tamano">Grande</column>
-            <column name="estado">LOST</column>
+            <column name="estado">PERDIDO</column>
             <column name="descripcion">Gato muy grande, ojos verdes, asustadizo</column>
             <column name="foto_url">https://example.com/photos/simba1.jpg</column>
-            <column name="contacto_id">9</column>
+            <column name="id_contacto">9</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Zeus</column>
             <column name="raza">Bulldog Francés</column>
             <column name="color">Atigrado</column>
             <column name="tamano">Pequeño</column>
-            <column name="estado">FOUND</column>
+            <column name="estado">ENCONTRADO</column>
             <column name="descripcion">Perro pequeño encontrado en tienda de mascotas</column>
             <column name="foto_url">https://example.com/photos/zeus1.jpg</column>
-            <column name="contacto_id">10</column>
+            <column name="id_contacto">10</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Cloe</column>
             <column name="raza">Yorkshire Terrier</column>
             <column name="color">Marrón y negro</column>
             <column name="tamano">Pequeño</column>
-            <column name="estado">LOST</column>
+            <column name="estado">PERDIDO</column>
             <column name="descripcion">Perra pequeña con moño rosa, muy juguetona</column>
             <column name="foto_url">https://example.com/photos/cloe1.jpg</column>
-            <column name="contacto_id">11</column>
+            <column name="id_contacto">11</column>
         </insert>
         <insert tableName="pets">
             <column name="nombre">Bingo</column>
             <column name="raza">Coker Spaniel</column>
             <column name="color">Café</column>
             <column name="tamano">Mediano</column>
-            <column name="estado">FOUND</column>
+            <column name="estado">ENCONTRADO</column>
             <column name="descripcion">Perro encontrado en playa, muy sociable</column>
             <column name="foto_url">https://example.com/photos/bingo1.jpg</column>
-            <column name="contacto_id">12</column>
+            <column name="id_contacto">12</column>
         </insert>
     </changeSet>
 </databaseChangeLog>
