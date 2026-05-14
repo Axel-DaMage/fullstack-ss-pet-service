@@ -1,5 +1,7 @@
 package com.sanosysalvos.petservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -77,6 +79,7 @@ public class Pet {
     public String getPhotoUrl() { return photoUrl; }
     public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
 
+    @JsonIgnore
     public Contact getContact() { return contact; }
     public void setContact(Contact contact) { this.contact = contact; }
 
