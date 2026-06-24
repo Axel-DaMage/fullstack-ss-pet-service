@@ -1,0 +1,49 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          region: us-east-1
+
+      - name: Upload docker-compose to S3
+        run: |
+          aws s3 cp docker-compose.backend.yml s3://${{ secrets.S3_BUCKET }}/docker-compose.backend.yml
+
+      - name: Execute deployment via SSM
+        run: |
+          aws ssm send-command \
+            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
+            --document-name "AWS-RunShellScript" \
+            --parameters commands=[
+              "cd /opt/sanossalvos",
+              "aws s3 cp s3://${{ secrets.S3_BUCKET }}/docker-compose.backend.yml /opt/sanossalvos/docker-compose.backend.yml",
+              "echo 'export DB_PET_HOST=${{ secrets.DB_PET_HOST }}
+export DB_GEO_HOST=${{ secrets.DB_GEO_HOST }}
+export DB_MATCH_HOST=${{ secrets.DB_MATCH_HOST }}
+export DB_PET_NAME=${{ secrets.DB_PET_NAME }}
+export DB_GEO_NAME=${{ secrets.DB_GEO_NAME }}
+export DB_MATCH_NAME=${{ secrets.DB_MATCH_NAME }}
+export DB_USER=${{ secrets.DB_USER }}
+export DB_PASS=${{ secrets.DB_PASS }}' > /opt/sanossalvos/.env",
+              "echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin",
+              "docker pull axeldamage/fullstack-ss-pet-service:latest",
+              "docker pull axeldamage/fullstack-ss-geo-service:latest",
+              "docker pull axeldamage/fullstack-ss-match-service:latest",
+              "docker compose -f docker-compose.backend.yml up -d",
+              "docker image prune -f"
+            ] \
+            --region us-east-1
