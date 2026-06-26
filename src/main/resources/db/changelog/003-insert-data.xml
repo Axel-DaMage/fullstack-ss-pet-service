@@ -78,6 +78,7 @@
         </insert>
     </changeSet>
     <changeSet id="insert-pets" author="sanosysalvos">
+        <validCheckSum>8:10514cf8d841becde0a9ce6497775623</validCheckSum>
         <insert tableName="pets">
             <column name="name">Max</column>
             <column name="race">Golden Retriever</column>
