@@ -83,7 +83,7 @@
             <column name="race">Golden Retriever</column>
             <column name="color">Dorado</column>
             <column name="size">Grande</column>
-            <column name="status">LOST</column>
+            <column name="status">PERDIDO</column>
             <column name="description">Perro adulto con collar rojo, muy amigable</column>
             <column name="photo_url">https://example.com/photos/max1.jpg</column>
             <column name="contact_id">1</column>
@@ -93,7 +93,7 @@
             <column name="race">Siames</column>
             <column name="color">Crema</column>
             <column name="size">Mediano</column>
-            <column name="status">LOST</column>
+            <column name="status">PERDIDO</column>
             <column name="description">Gata con ojos azules, muy asustadiza</column>
             <column name="photo_url">https://example.com/photos/luna1.jpg</column>
             <column name="contact_id">2</column>
@@ -103,7 +103,7 @@
             <column name="race">Pitbull</column>
             <column name="color">Negro</column>
             <column name="size">Grande</column>
-            <column name="status">FOUND</column>
+            <column name="status">ENCONTRADO</column>
             <column name="description">Perro macho encontrado en parque, sin collar</column>
             <column name="photo_url">https://example.com/photos/rocky1.jpg</column>
             <column name="contact_id">3</column>
@@ -113,7 +113,7 @@
             <column name="race">Persa</column>
             <column name="color">Naranja</column>
             <column name="size">Pequeño</column>
-            <column name="status">FOUND</column>
+            <column name="status">ENCONTRADO</column>
             <column name="description">Gato peludo encontrado cerca del supermercado</column>
             <column name="photo_url">https://example.com/photos/mishi1.jpg</column>
             <column name="contact_id">4</column>
@@ -123,7 +123,7 @@
             <column name="race">Labrador</column>
             <column name="color">Negro</column>
             <column name="size">Grande</column>
-            <column name="status">LOST</column>
+            <column name="status">PERDIDO</column>
             <column name="description">Perro con marca en la pata izquierda, muy activo</column>
             <column name="photo_url">https://example.com/photos/thor1.jpg</column>
             <column name="contact_id">5</column>
@@ -133,7 +133,7 @@
             <column name="race">Criollo</column>
             <column name="color">Gris</column>
             <column name="size">Mediano</column>
-            <column name="status">FOUND</column>
+            <column name="status">ENCONTRADO</column>
             <column name="description">Gata encontrada en estacionamiento, muy mansa</column>
             <column name="photo_url">https://example.com/photos/pelusa1.jpg</column>
             <column name="contact_id">6</column>
@@ -143,7 +143,7 @@
             <column name="race">Pastor Alemán</column>
             <column name="color">Marrón</column>
             <column name="size">Grande</column>
-            <column name="status">LOST</column>
+            <column name="status">PERDIDO</column>
             <column name="description">Perro con oreja derecha doblada, entrenado</column>
             <column name="photo_url">https://example.com/photos/duke1.jpg</column>
             <column name="contact_id">7</column>
@@ -153,7 +153,7 @@
             <column name="race">Beagle</column>
             <column name="color">Blanco y marrón</column>
             <column name="size">Mediano</column>
-            <column name="status">FOUND</column>
+            <column name="status">ENCONTRADO</column>
             <column name="description">Perra encontrada cerca de la plaza, tieneChip</column>
             <column name="photo_url">https://example.com/photos/kira1.jpg</column>
             <column name="contact_id">8</column>
@@ -163,7 +163,7 @@
             <column name="race">Maine Coon</column>
             <column name="color">Naranja rayado</column>
             <column name="size">Grande</column>
-            <column name="status">LOST</column>
+            <column name="status">PERDIDO</column>
             <column name="description">Gato muy grande, ojos verdes, asustadizo</column>
             <column name="photo_url">https://example.com/photos/simba1.jpg</column>
             <column name="contact_id">9</column>
@@ -173,7 +173,7 @@
             <column name="race">Bulldog Francés</column>
             <column name="color">Atigrado</column>
             <column name="size">Pequeño</column>
-            <column name="status">FOUND</column>
+            <column name="status">ENCONTRADO</column>
             <column name="description">Perro pequeño encontrado en tienda de mascotas</column>
             <column name="photo_url">https://example.com/photos/zeus1.jpg</column>
             <column name="contact_id">10</column>
@@ -183,7 +183,7 @@
             <column name="race">Yorkshire Terrier</column>
             <column name="color">Marrón y negro</column>
             <column name="size">Pequeño</column>
-            <column name="status">LOST</column>
+            <column name="status">PERDIDO</column>
             <column name="description">Perra pequeña con moño rosa, muy juguetona</column>
             <column name="photo_url">https://example.com/photos/cloe1.jpg</column>
             <column name="contact_id">11</column>
@@ -193,7 +193,7 @@
             <column name="race">Coker Spaniel</column>
             <column name="color">Café</column>
             <column name="size">Mediano</column>
-            <column name="status">FOUND</column>
+            <column name="status">ENCONTRADO</column>
             <column name="description">Perro encontrado en playa, muy sociable</column>
             <column name="photo_url">https://example.com/photos/bingo1.jpg</column>
             <column name="contact_id">12</column>

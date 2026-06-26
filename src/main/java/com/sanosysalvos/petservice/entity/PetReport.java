@@ -10,7 +10,7 @@ public class PetReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String type; // LOST o FOUND
+    private String type; // PERDIDO o ENCONTRADO
     private String species;
     private String color;
     private String breed;
