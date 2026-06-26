@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -25,7 +25,7 @@ class PetControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @MockitoBean
+    @MockBean
     private PetService petServiceMock;
 
     private final ObjectMapper mapper = new ObjectMapper();
@@ -113,7 +113,7 @@ class PetControllerTest {
 
     @Test
     void eliminarMascota_CuandoNoExiste_DeberiaRetornar404() throws Exception {
-        when(petServiceMock.deletePet(99L)).thenThrow(new RuntimeException("not found"));
+        doThrow(new RuntimeException("not found")).when(petServiceMock).deletePet(99L);
 
         mvc.perform(delete("/api/pets/99"))
                 .andExpect(status().isNotFound());
