@@ -95,8 +95,8 @@ public class PetController {
 
     @GetMapping("/totals/status")
     public ResponseEntity<Map<String, Long>> getTotalsByStatus() {
-        long lostCount = petService.countPetsByStatus("LOST");
-        long foundCount = petService.countPetsByStatus("FOUND");
-        return ResponseEntity.ok(Map.of("lost", lostCount, "found", foundCount));
+        long lostCount = petService.countPetsByStatus("PERDIDO");
+        long foundCount = petService.countPetsByStatus("ENCONTRADO");
+        return ResponseEntity.ok(Map.of("perdido", lostCount, "encontrado", foundCount));
     }
 }

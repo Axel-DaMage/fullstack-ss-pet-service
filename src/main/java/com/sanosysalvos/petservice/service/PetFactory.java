@@ -17,13 +17,13 @@ public class PetFactory {
     }
 
     public Pet createLostPet(String name, String race, String color, String size, String description) {
-        Pet pet = createPet(name, race, color, size, "LOST");
+        Pet pet = createPet(name, race, color, size, "PERDIDO");
         pet.setDescription(description);
         return pet;
     }
 
     public Pet createFoundPet(String name, String race, String color, String size, String description) {
-        Pet pet = createPet(name, race, color, size, "FOUND");
+        Pet pet = createPet(name, race, color, size, "ENCONTRADO");
         pet.setDescription(description);
         return pet;
     }
