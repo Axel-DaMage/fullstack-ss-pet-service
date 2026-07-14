@@ -8,7 +8,7 @@ import java.util.Optional;
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {
 
-    Optional<Contact> findByEmail(String email);
+    Optional<Contact> findByCorreo(String correo);
 
-    Optional<Contact> findByPhone(String phone);
+    Optional<Contact> findByTelefono(String telefono);
 }
