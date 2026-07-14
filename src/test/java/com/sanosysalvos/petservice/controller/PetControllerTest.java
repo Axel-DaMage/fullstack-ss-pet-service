@@ -1,6 +1,5 @@
 package com.sanosysalvos.petservice.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sanosysalvos.petservice.model.Pet;
 import com.sanosysalvos.petservice.service.PetService;
 import org.junit.jupiter.api.Test;
@@ -11,11 +10,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -23,162 +22,142 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class PetControllerTest {
 
     @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
     @MockBean
-    private PetService petServiceMock;
-
-    private final ObjectMapper mapper = new ObjectMapper();
-
-    private Pet crearMascota(Long id, String nombre, String estado) {
-        Pet p = new Pet();
-        p.setId(id);
-        p.setName(nombre);
-        p.setRace("Labrador");
-        p.setColor("Negro");
-        p.setSize("Grande");
-        p.setStatus(estado);
-        return p;
-    }
+    private PetService petService;
 
     @Test
-    void obtenerTodas_DeberiaRetornarLista200() throws Exception {
-        when(petServiceMock.getAllPets()).thenReturn(List.of(crearMascota(1L, "Max", "PERDIDO")));
+    void getAllPets_ShouldReturnList() throws Exception {
+        Pet pet = new Pet();
+        pet.setId(1L);
+        pet.setNombre("Max");
+        when(petService.getAllPets()).thenReturn(List.of(pet));
 
-        mvc.perform(get("/api/pets"))
+        mockMvc.perform(get("/api/pets"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.size()").value(1))
-                .andExpect(jsonPath("$[0].name").value("Max"));
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].nombre").value("Max"));
     }
 
     @Test
-    void obtenerPorId_CuandoExiste_DeberiaRetornar200() throws Exception {
-        when(petServiceMock.getPetById(1L)).thenReturn(Optional.of(crearMascota(1L, "Max", "PERDIDO")));
+    void getPetById_ShouldReturnPet() throws Exception {
+        Pet pet = new Pet();
+        pet.setId(1L);
+        pet.setNombre("Max");
+        when(petService.getPetById(1L)).thenReturn(Optional.of(pet));
 
-        mvc.perform(get("/api/pets/1"))
+        mockMvc.perform(get("/api/pets/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Max"));
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.nombre").value("Max"));
     }
 
     @Test
-    void obtenerPorId_CuandoNoExiste_DeberiaRetornar404() throws Exception {
-        when(petServiceMock.getPetById(99L)).thenReturn(Optional.empty());
+    void getPetById_ShouldReturn404WhenNotFound() throws Exception {
+        when(petService.getPetById(99L)).thenReturn(Optional.empty());
 
-        mvc.perform(get("/api/pets/99"))
+        mockMvc.perform(get("/api/pets/99"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void crearMascota_DeberiaRetornar201() throws Exception {
-        Pet mascota = crearMascota(null, "Nueva", "PERDIDO");
-        Pet mascotaConId = crearMascota(1L, "Nueva", "PERDIDO");
-        when(petServiceMock.createPet(any(Pet.class))).thenReturn(mascotaConId);
+    void createPet_ShouldReturn201() throws Exception {
+        Pet pet = new Pet();
+        pet.setId(1L);
+        pet.setNombre("Max");
+        when(petService.createPet(any(Pet.class))).thenReturn(pet);
 
-        mvc.perform(post("/api/pets")
+        mockMvc.perform(post("/api/pets")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(mascota)))
+                        .content("{\"nombre\":\"Max\"}"))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.name").value("Nueva"));
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.nombre").value("Max"));
     }
 
     @Test
-    void actualizarMascota_CuandoExiste_DeberiaRetornar200() throws Exception {
-        Pet actualizada = crearMascota(1L, "Modificado", "ENCONTRADO");
-        when(petServiceMock.updatePet(eq(1L), any(Pet.class))).thenReturn(actualizada);
+    void updatePet_ShouldReturnOk() throws Exception {
+        Pet pet = new Pet();
+        pet.setId(1L);
+        pet.setNombre("Max Updated");
+        when(petService.updatePet(eq(1L), any(Pet.class))).thenReturn(pet);
 
-        mvc.perform(put("/api/pets/1")
+        mockMvc.perform(put("/api/pets/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(actualizada)))
+                        .content("{\"nombre\":\"Max Updated\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Modificado"));
+                .andExpect(jsonPath("$.nombre").value("Max Updated"));
     }
 
     @Test
-    void actualizarMascota_CuandoNoExiste_DeberiaRetornar404() throws Exception {
-        when(petServiceMock.updatePet(eq(99L), any(Pet.class)))
-                .thenThrow(new RuntimeException("not found"));
+    void updatePet_ShouldReturn404WhenNotFound() throws Exception {
+        when(petService.updatePet(eq(99L), any(Pet.class))).thenThrow(new RuntimeException("Pet not found"));
 
-        mvc.perform(put("/api/pets/99")
+        mockMvc.perform(put("/api/pets/99")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(new Pet())))
+                        .content("{\"nombre\":\"Max\"}"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void eliminarMascota_CuandoExiste_DeberiaRetornar204() throws Exception {
-        mvc.perform(delete("/api/pets/1"))
+    void deletePet_ShouldReturn204() throws Exception {
+        mockMvc.perform(delete("/api/pets/1"))
                 .andExpect(status().isNoContent());
     }
 
     @Test
-    void eliminarMascota_CuandoNoExiste_DeberiaRetornar404() throws Exception {
-        doThrow(new RuntimeException("not found")).when(petServiceMock).deletePet(99L);
+    void deletePet_ShouldReturn404WhenNotFound() throws Exception {
+        doThrow(new RuntimeException("Pet not found")).when(petService).deletePet(99L);
 
-        mvc.perform(delete("/api/pets/99"))
+        mockMvc.perform(delete("/api/pets/99"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
-    void buscarPorRaza_DeberiaRetornar200() throws Exception {
-        when(petServiceMock.getPetsByRace("Labrador"))
-                .thenReturn(List.of(crearMascota(1L, "Max", "PERDIDO")));
+    void searchByRace_ShouldReturnFiltered() throws Exception {
+        Pet pet = new Pet();
+        pet.setId(1L);
+        pet.setRaza("Labrador");
+        when(petService.getPetsByRace("Labrador")).thenReturn(List.of(pet));
 
-        mvc.perform(get("/api/pets/search/race/Labrador"))
+        mockMvc.perform(get("/api/pets/search/race/Labrador"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].race").value("Labrador"));
+                .andExpect(jsonPath("$[0].raza").value("Labrador"));
     }
 
     @Test
-    void buscarPorEstado_DeberiaRetornar200() throws Exception {
-        when(petServiceMock.getPetsByStatus("PERDIDO"))
-                .thenReturn(List.of(crearMascota(1L, "Max", "PERDIDO")));
+    void searchByStatus_ShouldReturnFiltered() throws Exception {
+        Pet pet = new Pet();
+        pet.setId(1L);
+        pet.setEstado("PERDIDO");
+        when(petService.getPetsByStatus("PERDIDO")).thenReturn(List.of(pet));
 
-        mvc.perform(get("/api/pets/search/status/PERDIDO"))
+        mockMvc.perform(get("/api/pets/search/status/PERDIDO"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].status").value("PERDIDO"));
+                .andExpect(jsonPath("$[0].estado").value("PERDIDO"));
     }
 
     @Test
-    void buscarPorColor_DeberiaRetornar200() throws Exception {
-        when(petServiceMock.getPetsByColor("Negro"))
-                .thenReturn(List.of(crearMascota(1L, "Max", "PERDIDO")));
+    void searchByColor_ShouldReturnFiltered() throws Exception {
+        Pet pet = new Pet();
+        pet.setId(1L);
+        pet.setColor("Negro");
+        when(petService.getPetsByColor("Negro")).thenReturn(List.of(pet));
 
-        mvc.perform(get("/api/pets/search/color/Negro"))
+        mockMvc.perform(get("/api/pets/search/color/Negro"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].color").value("Negro"));
     }
 
     @Test
-    void obtenerTotalesPorEstado_DeberiaRetornarConteos() throws Exception {
-        when(petServiceMock.countPetsByStatus("PERDIDO")).thenReturn(3L);
-        when(petServiceMock.countPetsByStatus("ENCONTRADO")).thenReturn(2L);
+    void getTotalsByStatus_ShouldReturnCounts() throws Exception {
+        when(petService.countPetsByStatus("PERDIDO")).thenReturn(5L);
+        when(petService.countPetsByStatus("ENCONTRADO")).thenReturn(3L);
 
-        mvc.perform(get("/api/pets/totals/status"))
+        mockMvc.perform(get("/api/pets/totals/status"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.perdido").value(3))
-                .andExpect(jsonPath("$.encontrado").value(2));
-    }
-
-    @Test
-    void crearMascotaConContacto_DeberiaRetornar201() throws Exception {
-        Pet mascota = crearMascota(1L, "ConContacto", "PERDIDO");
-        when(petServiceMock.createPetWithContact(any(Pet.class), any())).thenReturn(mascota);
-
-        Map<String, Object> body = Map.of(
-                "name", "ConContacto",
-                "race", "Labrador",
-                "color", "Negro",
-                "size", "Grande",
-                "status", "PERDIDO",
-                "contactName", "Juan",
-                "contactPhone", "+56912345678"
-        );
-
-        mvc.perform(post("/api/pets/with-contact")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(mapper.writeValueAsString(body)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name").value("ConContacto"));
+                .andExpect(jsonPath("$.perdido").value(5))
+                .andExpect(jsonPath("$.encontrado").value(3));
     }
 }

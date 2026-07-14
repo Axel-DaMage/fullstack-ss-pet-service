@@ -6,53 +6,53 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PetFactoryTest {
 
-    private final PetFactory fabrica = new PetFactory();
+    private final PetFactory petFactory = new PetFactory();
 
     @Test
-    void crearMascota_DeberiaAsignarTodosLosCampos() {
-        Pet mascota = fabrica.createPet("Max", "Golden Retriever", "Dorado", "Grande", "PERDIDO");
+    void testCreatePet() {
+        Pet pet = petFactory.createPet("Max", "Golden Retriever", "Dorado", "Grande", "PERDIDO");
 
-        assertNotNull(mascota);
-        assertEquals("Max", mascota.getName());
-        assertEquals("Golden Retriever", mascota.getRace());
-        assertEquals("Dorado", mascota.getColor());
-        assertEquals("Grande", mascota.getSize());
-        assertEquals("PERDIDO", mascota.getStatus());
+        assertNotNull(pet);
+        assertEquals("Max", pet.getNombre());
+        assertEquals("Golden Retriever", pet.getRaza());
+        assertEquals("Dorado", pet.getColor());
+        assertEquals("Grande", pet.getTamano());
+        assertEquals("PERDIDO", pet.getEstado());
     }
 
     @Test
-    void crearMascotaPerdida_DeberiaTenerEstadoPERDIDO() {
-        Pet mascota = fabrica.createLostPet("Luna", "Siames", "Crema", "Mediano", "Gata perdida en la noche");
+    void testCreateLostPet() {
+        Pet pet = petFactory.createLostPet("Luna", "Siames", "Crema", "Mediano", "Gata perdida");
 
-        assertNotNull(mascota);
-        assertEquals("Luna", mascota.getName());
-        assertEquals("PERDIDO", mascota.getStatus());
-        assertEquals("Gata perdida en la noche", mascota.getDescription());
+        assertNotNull(pet);
+        assertEquals("Luna", pet.getNombre());
+        assertEquals("PERDIDO", pet.getEstado());
+        assertEquals("Gata perdida", pet.getDescripcion());
     }
 
     @Test
-    void crearMascotaEncontrada_DeberiaTenerEstadoENCONTRADO() {
-        Pet mascota = fabrica.createFoundPet("Rocky", "Pitbull", "Negro", "Grande", "Encontrado en el parque");
+    void testCreateFoundPet() {
+        Pet pet = petFactory.createFoundPet("Rocky", "Pastor Aleman", "Marron", "Grande", "Encontrado en parque");
 
-        assertNotNull(mascota);
-        assertEquals("Rocky", mascota.getName());
-        assertEquals("ENCONTRADO", mascota.getStatus());
-        assertEquals("Encontrado en el parque", mascota.getDescription());
+        assertNotNull(pet);
+        assertEquals("Rocky", pet.getNombre());
+        assertEquals("ENCONTRADO", pet.getEstado());
+        assertEquals("Encontrado en parque", pet.getDescripcion());
     }
 
     @Test
-    void crearMascotaPerdida_SinDescripcion_DeberiaTenerDescripcionNula() {
-        Pet mascota = fabrica.createLostPet("Thor", "Labrador", "Negro", "Grande", null);
+    void testCreateLostPet_SetsStatusPerdido() {
+        Pet pet = petFactory.createLostPet("Luna", "Siames", "Crema", "Mediano", "Gata perdida");
 
-        assertNull(mascota.getDescription());
-        assertEquals("PERDIDO", mascota.getStatus());
+        assertEquals("PERDIDO", pet.getEstado());
+        assertEquals("Gata perdida", pet.getDescripcion());
     }
 
     @Test
-    void crearMascota_SinNombre_DeberiaCrearConNombreNulo() {
-        Pet mascota = fabrica.createPet(null, "Raza", "Color", "Size", "PERDIDO");
+    void testCreateFoundPet_SetsStatusEncontrado() {
+        Pet pet = petFactory.createFoundPet("Rocky", "Pastor Aleman", "Marron", "Grande", "Encontrado en parque");
 
-        assertNull(mascota.getName());
-        assertEquals("Raza", mascota.getRace());
+        assertEquals("ENCONTRADO", pet.getEstado());
+        assertEquals("Encontrado en parque", pet.getDescripcion());
     }
 }

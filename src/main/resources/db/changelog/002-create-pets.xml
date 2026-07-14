@@ -3,29 +3,29 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
-    <changeSet id="create-pets-table" author="sanosysalvos">
+    <changeSet id="crear-tabla-mascotas" author="sanosysalvos">
         <createTable tableName="pets">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="VARCHAR(100)"><constraints nullable="false"/></column>
-            <column name="race" type="VARCHAR(50)"/>
+            <column name="nombre" type="VARCHAR(100)" nullable="false"/>
+            <column name="raza" type="VARCHAR(50)"/>
             <column name="color" type="VARCHAR(50)"/>
-            <column name="size" type="VARCHAR(20)"/>
-            <column name="status" type="VARCHAR(20)"><constraints nullable="false"/></column>
-            <column name="description" type="VARCHAR(500)"/>
-            <column name="photo_url" type="VARCHAR(255)"/>
-            <column name="contact_id" type="BIGINT">
+            <column name="tamano" type="VARCHAR(20)"/>
+            <column name="estado" type="VARCHAR(20)" nullable="false"/>
+            <column name="descripcion" type="VARCHAR(500)"/>
+            <column name="foto_url" type="VARCHAR(255)"/>
+            <column name="id_contacto" type="BIGINT">
                 <constraints foreignKeyName="fk_pet_contact" references="contacts(id)" deleteCascade="true"/>
             </column>
-            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"><constraints nullable="false"/></column>
-            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"><constraints nullable="false"/></column>
+            <column name="creado_en" type="TIMESTAMP" nullable="false" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="actualizado_en" type="TIMESTAMP" nullable="false" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
         </createTable>
-        <createIndex tableName="pets" indexName="idx_pet_status">
-            <column name="status"/>
-        </createIndex>
-        <createIndex tableName="pets" indexName="idx_pet_race">
-            <column name="race"/>
-        </createIndex>
+        <addIndex tableName="pets" indexName="idx_pet_estado">
+            <column name="estado"/>
+        </addIndex>
+        <addIndex tableName="pets" indexName="idx_pet_raza">
+            <column name="raza"/>
+        </addIndex>
     </changeSet>
 </databaseChangeLog>

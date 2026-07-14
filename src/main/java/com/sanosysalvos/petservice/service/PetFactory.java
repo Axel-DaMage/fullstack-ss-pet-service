@@ -6,25 +6,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class PetFactory {
 
-    public Pet createPet(String name, String race, String color, String size, String status) {
+    public Pet createPet(String nombre, String raza, String color, String tamano, String estado) {
         Pet pet = new Pet();
-        pet.setName(name);
-        pet.setRace(race);
+        pet.setNombre(nombre);
+        pet.setRaza(raza);
         pet.setColor(color);
-        pet.setSize(size);
-        pet.setStatus(status);
+        pet.setTamano(tamano);
+        pet.setEstado(estado);
         return pet;
     }
 
-    public Pet createLostPet(String name, String race, String color, String size, String description) {
-        Pet pet = createPet(name, race, color, size, "PERDIDO");
-        pet.setDescription(description);
+    public Pet createLostPet(String nombre, String raza, String color, String tamano, String descripcion) {
+        Pet pet = createPet(nombre, raza, color, tamano, "PERDIDO");
+        pet.setDescripcion(descripcion);
         return pet;
     }
 
-    public Pet createFoundPet(String name, String race, String color, String size, String description) {
-        Pet pet = createPet(name, race, color, size, "ENCONTRADO");
-        pet.setDescription(description);
+    public Pet createFoundPet(String nombre, String raza, String color, String tamano, String descripcion) {
+        Pet pet = createPet(nombre, raza, color, tamano, "ENCONTRADO");
+        pet.setDescripcion(descripcion);
         return pet;
     }
 }

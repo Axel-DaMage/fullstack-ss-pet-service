@@ -14,217 +14,207 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class PetServiceTest {
 
     @Mock
-    private PetRepository petRepositoryMock;
+    private PetRepository petRepository;
+
     @Mock
-    private ContactRepository contactRepositoryMock;
+    private ContactRepository contactRepository;
+
     @Mock
-    private PetFactory petFactoryMock;
+    private PetFactory petFactory;
 
     private PetService petService;
 
-    private Pet mascota;
-    private Contact contacto;
-
     @BeforeEach
     void setUp() {
-        petService = new PetService(petRepositoryMock, contactRepositoryMock, petFactoryMock);
-
-        mascota = new Pet();
-        mascota.setId(1L);
-        mascota.setName("Max");
-        mascota.setRace("Golden Retriever");
-        mascota.setColor("Dorado");
-        mascota.setSize("Grande");
-        mascota.setStatus("PERDIDO");
-
-        contacto = new Contact();
-        contacto.setId(1L);
-        contacto.setName("Juan Perez");
-        contacto.setPhone("+56912345678");
+        petService = new PetService(petRepository, contactRepository, petFactory);
     }
 
     @Test
-    void obtenerTodos_DeberiaRetornarTodasLasMascotas() {
-        when(petRepositoryMock.findAll()).thenReturn(List.of(mascota));
+    void getAllPets_ShouldReturnAll() {
+        Pet pet = new Pet();
+        pet.setId(1L);
+        when(petRepository.findAll()).thenReturn(List.of(pet));
 
-        List<Pet> resultado = petService.getAllPets();
+        List<Pet> result = petService.getAllPets();
 
-        assertNotNull(resultado);
-        assertEquals(1, resultado.size());
-        assertEquals("Max", resultado.get(0).getName());
-        verify(petRepositoryMock).findAll();
+        assertEquals(1, result.size());
+        assertEquals(1L, result.get(0).getId());
+        verify(petRepository).findAll();
     }
 
     @Test
-    void obtenerPorId_CuandoExiste_DeberiaRetornarMascota() {
-        when(petRepositoryMock.findById(1L)).thenReturn(Optional.of(mascota));
+    void getPetById_ShouldReturnPet() {
+        Pet pet = new Pet();
+        pet.setId(1L);
+        when(petRepository.findById(1L)).thenReturn(Optional.of(pet));
 
-        Optional<Pet> resultado = petService.getPetById(1L);
+        Optional<Pet> result = petService.getPetById(1L);
 
-        assertTrue(resultado.isPresent());
-        assertEquals("Max", resultado.get().getName());
-        verify(petRepositoryMock).findById(1L);
+        assertTrue(result.isPresent());
+        assertEquals(1L, result.get().getId());
     }
 
     @Test
-    void obtenerPorId_CuandoNoExiste_DeberiaRetornarOptionalVacio() {
-        when(petRepositoryMock.findById(99L)).thenReturn(Optional.empty());
+    void getPetById_ShouldThrowWhenNotFound() {
+        when(petRepository.findById(99L)).thenReturn(Optional.empty());
 
-        Optional<Pet> resultado = petService.getPetById(99L);
+        Optional<Pet> result = petService.getPetById(99L);
 
-        assertTrue(resultado.isEmpty());
-        verify(petRepositoryMock).findById(99L);
+        assertFalse(result.isPresent());
     }
 
     @Test
-    void crearMascota_DeberiaGuardarYRetornar() {
-        when(petRepositoryMock.save(any(Pet.class))).thenReturn(mascota);
+    void createPet_ShouldSaveAndReturn() {
+        Pet pet = new Pet();
+        pet.setNombre("Max");
+        when(petRepository.save(pet)).thenReturn(pet);
 
-        Pet resultado = petService.createPet(mascota);
+        Pet result = petService.createPet(pet);
 
-        assertNotNull(resultado);
-        assertEquals("Max", resultado.getName());
-        verify(petRepositoryMock).save(mascota);
+        assertNotNull(result);
+        assertEquals("Max", result.getNombre());
+        verify(petRepository).save(pet);
     }
 
     @Test
-    void crearMascotaConContacto_DeberiaGuardarAmbos() {
-        when(contactRepositoryMock.save(any(Contact.class))).thenReturn(contacto);
-        when(petRepositoryMock.save(any(Pet.class))).thenReturn(mascota);
+    void updatePet_ShouldUpdateAndReturn() {
+        Pet existing = new Pet();
+        existing.setId(1L);
+        existing.setNombre("Old Name");
 
-        Pet resultado = petService.createPetWithContact(mascota, contacto);
+        Pet details = new Pet();
+        details.setNombre("New Name");
+        details.setRaza("Labrador");
+        details.setColor("Negro");
+        details.setTamano("Grande");
+        details.setEstado("PERDIDO");
+        details.setDescripcion("Updated desc");
+        details.setFotoUrl("http://foto.jpg");
 
-        assertNotNull(resultado);
-        assertEquals("Max", resultado.getName());
-        assertEquals(contacto, mascota.getContact());
-        verify(contactRepositoryMock).save(contacto);
-        verify(petRepositoryMock).save(mascota);
+        when(petRepository.findById(1L)).thenReturn(Optional.of(existing));
+        when(petRepository.save(existing)).thenReturn(existing);
+
+        Pet result = petService.updatePet(1L, details);
+
+        assertEquals("New Name", result.getNombre());
+        assertEquals("Labrador", result.getRaza());
+        assertEquals("Negro", result.getColor());
+        assertEquals("Grande", result.getTamano());
+        assertEquals("PERDIDO", result.getEstado());
+        assertEquals("Updated desc", result.getDescripcion());
+        assertEquals("http://foto.jpg", result.getFotoUrl());
     }
 
     @Test
-    void actualizarMascota_CuandoExiste_DeberiaActualizarCampos() {
-        Pet existente = new Pet();
-        existente.setId(1L);
-        existente.setName("Original");
-        existente.setRace("Original");
-        existente.setColor("Original");
-        existente.setSize("Original");
-        existente.setStatus("PERDIDO");
+    void updatePet_ShouldThrowWhenNotFound() {
+        when(petRepository.findById(99L)).thenReturn(Optional.empty());
 
-        Pet actualizado = new Pet();
-        actualizado.setName("Max Modificado");
-        actualizado.setRace("Labrador");
-        actualizado.setColor("Negro");
-        actualizado.setSize("Mediano");
-        actualizado.setStatus("ENCONTRADO");
-        actualizado.setDescription("Encontrado en parque");
-        actualizado.setPhotoUrl("http://foto.com");
-
-        when(petRepositoryMock.findById(1L)).thenReturn(Optional.of(existente));
-        when(petRepositoryMock.save(any(Pet.class))).thenAnswer(inv -> inv.getArgument(0));
-
-        Pet resultado = petService.updatePet(1L, actualizado);
-
-        assertEquals("Max Modificado", resultado.getName());
-        assertEquals("Labrador", resultado.getRace());
-        assertEquals("Negro", resultado.getColor());
-        assertEquals("Mediano", resultado.getSize());
-        assertEquals("ENCONTRADO", resultado.getStatus());
-        assertEquals("Encontrado en parque", resultado.getDescription());
-        assertEquals("http://foto.com", resultado.getPhotoUrl());
-        verify(petRepositoryMock).findById(1L);
-        verify(petRepositoryMock).save(existente);
+        assertThrows(RuntimeException.class, () -> petService.updatePet(99L, new Pet()));
     }
 
     @Test
-    void actualizarMascota_CuandoNoExiste_DeberiaLanzarExcepcion() {
-        when(petRepositoryMock.findById(99L)).thenReturn(Optional.empty());
-
-        assertThrows(RuntimeException.class,
-                () -> petService.updatePet(99L, new Pet()));
-        verify(petRepositoryMock).findById(99L);
-        verify(petRepositoryMock, never()).save(any());
-    }
-
-    @Test
-    void eliminarMascota_CuandoExiste_DeberiaEliminar() {
-        when(petRepositoryMock.findById(1L)).thenReturn(Optional.of(mascota));
+    void deletePet_ShouldDelete() {
+        Pet pet = new Pet();
+        pet.setId(1L);
+        when(petRepository.findById(1L)).thenReturn(Optional.of(pet));
+        doNothing().when(petRepository).delete(pet);
 
         petService.deletePet(1L);
 
-        verify(petRepositoryMock).findById(1L);
-        verify(petRepositoryMock).delete(mascota);
+        verify(petRepository).delete(pet);
     }
 
     @Test
-    void eliminarMascota_CuandoNoExiste_DeberiaLanzarExcepcion() {
-        when(petRepositoryMock.findById(99L)).thenReturn(Optional.empty());
+    void deletePet_ShouldThrowWhenNotFound() {
+        when(petRepository.findById(99L)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class,
-                () -> petService.deletePet(99L));
-        verify(petRepositoryMock).findById(99L);
-        verify(petRepositoryMock, never()).delete(any());
+        assertThrows(RuntimeException.class, () -> petService.deletePet(99L));
     }
 
     @Test
-    void buscarPorRaza_DeberiaRetornarFiltradas() {
-        when(petRepositoryMock.findByRace("Labrador")).thenReturn(List.of(mascota));
+    void findByStatus_ShouldReturnFiltered() {
+        Pet pet = new Pet();
+        pet.setEstado("PERDIDO");
+        when(petRepository.findByEstado("PERDIDO")).thenReturn(List.of(pet));
 
-        List<Pet> resultado = petService.getPetsByRace("Labrador");
+        List<Pet> result = petService.getPetsByStatus("PERDIDO");
 
-        assertEquals(1, resultado.size());
-        verify(petRepositoryMock).findByRace("Labrador");
+        assertEquals(1, result.size());
+        assertEquals("PERDIDO", result.get(0).getEstado());
     }
 
     @Test
-    void buscarPorEstado_DeberiaRetornarFiltradas() {
-        when(petRepositoryMock.findByStatus("PERDIDO")).thenReturn(List.of(mascota));
+    void findByRace_ShouldReturnFiltered() {
+        Pet pet = new Pet();
+        pet.setRaza("Labrador");
+        when(petRepository.findByRaza("Labrador")).thenReturn(List.of(pet));
 
-        List<Pet> resultado = petService.getPetsByStatus("PERDIDO");
+        List<Pet> result = petService.getPetsByRace("Labrador");
 
-        assertEquals(1, resultado.size());
-        verify(petRepositoryMock).findByStatus("PERDIDO");
+        assertEquals(1, result.size());
+        assertEquals("Labrador", result.get(0).getRaza());
     }
 
     @Test
-    void buscarPorColor_DeberiaRetornarFiltradas() {
-        when(petRepositoryMock.findByColor("Dorado")).thenReturn(List.of(mascota));
+    void findByColor_ShouldReturnFiltered() {
+        Pet pet = new Pet();
+        pet.setColor("Negro");
+        when(petRepository.findByColor("Negro")).thenReturn(List.of(pet));
 
-        List<Pet> resultado = petService.getPetsByColor("Dorado");
+        List<Pet> result = petService.getPetsByColor("Negro");
 
-        assertEquals(1, resultado.size());
-        verify(petRepositoryMock).findByColor("Dorado");
+        assertEquals(1, result.size());
+        assertEquals("Negro", result.get(0).getColor());
     }
 
     @Test
-    void contarPorEstado_DeberiaRetornarCantidad() {
-        when(petRepositoryMock.countByStatus("PERDIDO")).thenReturn(5L);
+    void getTotalsByStatus_ShouldReturnCounts() {
+        when(petRepository.countByEstado("PERDIDO")).thenReturn(5L);
+        when(petRepository.countByEstado("ENCONTRADO")).thenReturn(3L);
 
-        long resultado = petService.countPetsByStatus("PERDIDO");
+        long lost = petService.countPetsByStatus("PERDIDO");
+        long found = petService.countPetsByStatus("ENCONTRADO");
 
-        assertEquals(5L, resultado);
-        verify(petRepositoryMock).countByStatus("PERDIDO");
+        assertEquals(5L, lost);
+        assertEquals(3L, found);
     }
 
     @Test
-    void crearMascotaDesdeFactory_DeberiaDelegarEnFactory() {
-        Pet mascotaFactory = new Pet();
-        mascotaFactory.setName("Factory");
-        when(petFactoryMock.createPet("Factory", "Raza", "Color", "Grande", "PERDIDO"))
-                .thenReturn(mascotaFactory);
+    void createPetWithContact_ShouldSaveBothInTransaction() {
+        Pet pet = new Pet();
+        pet.setNombre("Max");
 
-        Pet resultado = petService.createPetFromFactory("Factory", "Raza", "Color", "Grande", "PERDIDO");
+        Contact contact = new Contact();
+        contact.setNombre("Juan");
+        contact.setTelefono("123456789");
+        contact.setCorreo("juan@test.com");
 
-        assertNotNull(resultado);
-        assertEquals("Factory", resultado.getName());
-        verify(petFactoryMock).createPet("Factory", "Raza", "Color", "Grande", "PERDIDO");
+        Contact savedContact = new Contact();
+        savedContact.setId(1L);
+        savedContact.setNombre("Juan");
+
+        Pet savedPet = new Pet();
+        savedPet.setId(1L);
+        savedPet.setNombre("Max");
+        savedPet.setContacto(savedContact);
+
+        when(contactRepository.save(contact)).thenReturn(savedContact);
+        when(petRepository.save(pet)).thenReturn(savedPet);
+
+        Pet result = petService.createPetWithContact(pet, contact);
+
+        assertNotNull(result);
+        assertEquals("Max", result.getNombre());
+        assertNotNull(result.getContacto());
+        assertEquals("Juan", result.getContacto().getNombre());
+        verify(contactRepository).save(contact);
+        verify(petRepository).save(pet);
     }
 }

@@ -1,0 +1,60 @@
+# ============================================
+# Docker Compose - Backend Server (AWS EC2) with RDS
+# ============================================
+# Servicios: Pet, Geo, Match (usa RDS para MySQL)
+# ============================================
+
+services:
+  pet-service:
+    image: axeldamage/fullstack-ss-pet-service:latest
+    container_name: pet-service
+    environment:
+      - DB_HOST=${DB_PET_HOST}
+      - DB_PORT=3306
+      - DB_NAME=${DB_PET_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    networks:
+      - backend-network
+    restart: unless-stopped
+
+  geo-service:
+    image: axeldamage/fullstack-ss-geo-service:latest
+    container_name: geo-service
+    environment:
+      - DB_HOST=${DB_GEO_HOST}
+      - DB_PORT=3306
+      - DB_NAME=${DB_GEO_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - PORT=3002
+    ports:
+      - "3002:3002"
+    networks:
+      - backend-network
+    restart: unless-stopped
+
+  match-service:
+    image: axeldamage/fullstack-ss-match-service:latest
+    container_name: match-service
+    environment:
+      - DB_HOST=${DB_MATCH_HOST}
+      - DB_PORT=3306
+      - DB_NAME=${DB_MATCH_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - PORT=3003
+      - PET_SERVICE_URL=http://pet-service:3001
+      - LOCATION_SERVICE_URL=http://geo-service:3002
+    ports:
+      - "3003:3003"
+    networks:
+      - backend-network
+    restart: unless-stopped
+
+networks:
+  backend-network:
+    driver: bridge

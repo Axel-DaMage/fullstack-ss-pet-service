@@ -1,8 +1,16 @@
 target/
 *.class
+*.log
 *.jar
 *.war
-*.log
+*.ear
+*.zip
+*.tar.gz
+*.rar
 .idea/
 *.iml
 .vscode/
+.settings/
+.project
+.classpath
+.DS_Store
